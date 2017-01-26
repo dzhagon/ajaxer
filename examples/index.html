@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="/">
+    <meta charset="UTF-8">
+    <title>Example Test</title>
+
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta property="og:type" content="">
+    <meta name="og:title" content="">
+    <meta name="og:description" content="">
+    <meta name="og:site_name" content="">
+    <meta name="og:url" content="">
+    <meta name="og:image" content="">
+    <script src="../ajaxer.js"></script>
+</head>
+<body>
+
+<p>We are on the main page</p>
+
+<button onclick="ajaxer.get('page1.html', function () {console.log('fail to load page1');});">Load page1</button>
+<button onclick="ajaxer.get('page2.html', function () {console.log('fail to load page2');});">Load page2</button>
+<button onclick="ajaxer.get('index.html', function () {console.log('fail to load main page');});">Load main</button>
+
+<h1>Main page header</h1>
+<div class="play-list">
+    <div class="track">main page track 1</div>
+    <div class="track">main page track 2</div>
+    <div class="track">main page track 3</div>
+</div>
+
+<script>
+ajaxer.elements = [
+    'link[rel="canonical"]',
+    'title',
+    'meta[name="description"]',
+    'meta[name="keywords"]',
+    'meta[property="og:type"]',
+    'meta[name="og:title"]',
+    'meta[name="og:description"]',
+    'meta[name="og:site_name"]',
+    'meta[name="og:url"]',
+    'meta[name="og:image"]',
+    'h1',
+    '.play-list'
+];
+</script>
+</body>
+</html>
