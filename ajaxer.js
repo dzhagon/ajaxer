@@ -1,6 +1,7 @@
 var ajaxer = (function () {
 	var container = document.createElement('div');
 	this.elements = [];
+	this.relativePath = '';
 
 	var dynamicCache = {};
 
@@ -36,13 +37,14 @@ var ajaxer = (function () {
 				relativePath.push(url);
 				url = relativePath.join('/');
 			}
+			url = this.relativePath + url;
 		}
 		else if (url.indexOf(host) !== -1) {
 			url = document.location.href.slice(url.indexOf(host) + host.length);
 		}
 
 		return url;
-	};
+	}.bind(this);
 
 	var replaceContent = function (html) {
 
