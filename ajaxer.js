@@ -68,6 +68,12 @@ var ajaxer = (function () {
 		}
 
 	}.bind(this);
+
+	document.addEventListener('DOMContentLoaded', function () {
+		var xhr = new XMLHttpRequest();
+		xhr.responseText = document.body.parentNode || document.body.parentElement;
+		dynamicCache[document.location.href] = xhr;
+	}.bind(this));
 	
 	return this;
 })();
