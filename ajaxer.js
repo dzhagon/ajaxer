@@ -70,10 +70,25 @@ var ajaxer = (function () {
 	}.bind(this);
 
 	document.addEventListener('DOMContentLoaded', function () {
-		var xhr = new XMLHttpRequest();
-		xhr.responseText = document.body.parentNode || document.body.parentElement;
-		dynamicCache[document.location.href] = xhr;
+		var title = document.title;
+
+		var xhr = {};
+		xhr.title = title;
+		var html = document.body.parentNode || document.body.parentElement;
+		xhr.responseText = html.outerHTML;
+
+		var url = document.location.href;
+
+		dynamicCache[url] = xhr;
+
+		try {
+			window.history.replaceState(xhr, title, url);
+		}
+		catch (e) {
+			console.warn(e, 'History API unsupported!');
+		}
 	}.bind(this));
+
 	
 	return this;
 })();
