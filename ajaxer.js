@@ -94,17 +94,22 @@ var ajaxer = (function () {
 	};
 
 
-	this.get = function (url, errorHandler) {
+	this.get = function (url, successHandler, errorHandler) {
 		url = getRelativeUrl(url);
 		var currentUrl = getRelativeUrl(document.location.href.split('?').shift());
 
 		if (url === currentUrl) return;
 
+		var handler = function (url, xhr) {
+			replaceContentXHR(url, xhr);
+			successHandler(url, xhr);
+		}.bind(this);
+
 		if (dynamicCache.hasOwnProperty(url)) {
-			replaceContentXHR(url, dynamicCache[url]);
+			handler(url, dynamicCache[url]);
 		}
 		else {
-			ajaxRequest('GET', url, replaceContentXHR, errorHandler);
+			ajaxRequest('GET', url, handler, errorHandler);
 		}
 	}.bind(this);
 

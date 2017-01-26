@@ -19,9 +19,9 @@
 
 <p>We are on the main page</p>
 
-<button onclick="ajaxer.get('page1.html', function () {console.log('fail to load page1');});">Load page1</button>
-<button onclick="ajaxer.get('page2.html', function () {console.log('fail to load page2');});">Load page2</button>
-<button onclick="ajaxer.get('index.html', function () {console.log('fail to load main page');});">Load main</button>
+<button onclick="ajaxer.get('index.html', function () {console.log('success: main page');}, function () {console.log('error: main page');});">Load main</button>
+<button onclick="ajaxer.get('page1.html', function () {console.log('success: page1');}, function () {console.log('error: page1');});">Load page1</button>
+<button onclick="ajaxer.get('page2.html', function () {console.log('success: page2');}, function () {console.log('error: page2');});">Load page2</button>
 
 <h1>Main page header</h1>
 <div class="play-list">
