@@ -26,12 +26,37 @@ var ajaxer = (function () {
 
 		xhr.send();
 	};
-		
+
+	var getRelativeUrl = function (url) {
+		var host = document.location.hostname || document.location.host;
+		if (url.indexOf('http') === -1)
+		{
+			if (url.indexOf('/') !== 0)
+			{
+				var relativePath = document.location.pathname.split('/');
+				relativePath.pop();
+				relativePath.push(url);
+				url = relativePath.join('/');
+			}
+		}
+		else if (url.indexOf(host) !== -1)
+		{
+			document.location.href.slice(url.indexOf(host) + host.length);
+
+		}
+
+		return url;
+	};
+
 	this.get = function (url, errorHandler) {
-		
+		url = getRelativeUrl(url);
+
 		var replaceContent = function (url, xhr) {
 
-			if (!dynamicCache.hasOwnProperty(url)) dynamicCache[url] = xhr;
+			if (!dynamicCache.hasOwnProperty(url))
+			{
+				dynamicCache[url] = xhr;
+			}
 
 			container.innerHTML = xhr.responseText;
 
@@ -77,7 +102,7 @@ var ajaxer = (function () {
 		var html = document.body.parentNode || document.body.parentElement;
 		xhr.responseText = html.outerHTML;
 
-		var url = document.location.href;
+		var url = getRelativeUrl(window.location.pathname);
 
 		dynamicCache[url] = xhr;
 
