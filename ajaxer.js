@@ -3,7 +3,6 @@ var ajaxer = (function () {
 	this.elements = [];
 	this.overlaySelector = '';
 	this.overlayShowClass = '';
-	this.relativePath = '';
 
 	var dynamicCache = {};
 
@@ -38,10 +37,6 @@ var ajaxer = (function () {
 				relativePath.pop();
 				relativePath.push(url);
 				url = relativePath.join('/');
-			}
-			if (url.indexOf(this.relativePath) === -1)
-			{
-				url = this.relativePath + url;
 			}
 		}
 		else if (url.indexOf(host) !== -1) {
