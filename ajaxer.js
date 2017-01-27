@@ -39,7 +39,10 @@ var ajaxer = (function () {
 				relativePath.push(url);
 				url = relativePath.join('/');
 			}
-			url = this.relativePath + url;
+			if (url.indexOf(this.relativePath) === -1)
+			{
+				url = this.relativePath + url;
+			}
 		}
 		else if (url.indexOf(host) !== -1) {
 			url = document.location.href.slice(url.indexOf(host) + host.length);
