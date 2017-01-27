@@ -13,9 +13,17 @@
     <meta name="og:site_name" content="">
     <meta name="og:url" content="">
     <meta name="og:image" content="">
-    <script src="https://raw.githubusercontent.com/dzhagon/ajaxer/master/ajaxer.js"></script>
+    <script src="js/ajaxer.min.js"></script>
+    <link rel="stylesheet" href="css/ajaxer.css">
 </head>
 <body>
+
+<div class="preloader">
+    <div class='preloader-animation'>
+        <div></div>
+        <div></div>
+    </div>
+</div>
 
 <p>We are on the main page</p>
 
@@ -45,6 +53,8 @@ ajaxer.elements = [
     'h1',
     '.play-list'
 ];
+    ajaxer.overlaySelector = '.preloader';
+    ajaxer.overlayShowClass = 'preloader--show';
 </script>
 </body>
 </html>

@@ -1,6 +1,8 @@
 var ajaxer = (function () {
 	var container = document.createElement('div');
 	this.elements = [];
+	this.overlaySelector = '';
+	this.overlayShowClass = '';
 	this.relativePath = '';
 
 	var dynamicCache = {};
@@ -95,6 +97,26 @@ var ajaxer = (function () {
 		}
 	};
 
+	var showOverlay = function () {
+		if (this.overlaySelector && this.overlayShowClass) {
+			var overlay = document.querySelector(this.overlaySelector);
+			if (overlay)
+			{
+				overlay.classList.add(this.overlayShowClass);
+			}
+		}
+	}.bind(this);
+
+	var hideOverlay = function () {
+		if (this.overlaySelector && this.overlayShowClass) {
+			var overlay = document.querySelector(this.overlaySelector);
+			if (overlay)
+			{
+				overlay.classList.remove(this.overlayShowClass);
+			}
+		}
+	}.bind(this);
+
 
 	this.get = function (url, successHandler, errorHandler) {
 		url = getRelativeUrl(url);
@@ -102,16 +124,23 @@ var ajaxer = (function () {
 
 		if (url === currentUrl) return;
 
-		var handler = function (url, xhr) {
+		var success = function (url, xhr) {
 			replaceContentXHR(url, xhr);
+			hideOverlay();
 			successHandler(url, xhr);
 		}.bind(this);
 
+		var error = function (url, xhr) {
+			hideOverlay();
+			errorHandler(url, xhr);
+		}.bind(this);
+
 		if (dynamicCache.hasOwnProperty(url)) {
-			handler(url, dynamicCache[url]);
+			success(url, dynamicCache[url]);
 		}
 		else {
-			ajaxRequest('GET', url, handler, errorHandler);
+			showOverlay();
+			ajaxRequest('GET', url, success, error);
 		}
 	}.bind(this);
 

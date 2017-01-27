@@ -10,9 +10,18 @@
     <meta name="og:title" content="page2">
     <meta name="og:description" content="description of page2">
     <meta name="og:url" content="/page2.html">
-    <script src="https://raw.githubusercontent.com/dzhagon/ajaxer/master/ajaxer.js"></script>
+    <script src="js/ajaxer.min.js"></script>
+    <link rel="stylesheet" href="css/ajaxer.css">
 </head>
 <body>
+
+
+<div class="preloader">
+    <div class='preloader-animation'>
+        <div></div>
+        <div></div>
+    </div>
+</div>
 
 <p>We are on the second page</p>
 
@@ -43,6 +52,8 @@
         'h1',
         '.play-list'
     ];
+    ajaxer.overlaySelector = '.preloader';
+    ajaxer.overlayShowClass = 'preloader--show';
 </script>
 
 </body>
