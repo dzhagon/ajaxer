@@ -31,16 +31,23 @@ var ajaxer = (function () {
 
 	var getRelativeUrl = function (url) {
 		var host = document.location.hostname || document.location.host;
-		if (url.indexOf('http') === -1) {
-			if (url.indexOf('/') !== 0) {
-				var relativePath = document.location.pathname.split('/');
-				relativePath.pop();
-				relativePath.push(url);
-				url = relativePath.join('/');
-			}
-		}
-		else if (url.indexOf(host) !== -1) {
+
+		if (url.indexOf(host) !== -1) {
 			url = document.location.href.slice(url.indexOf(host) + host.length);
+		}
+		else if (url.indexOf('http') === -1 && url.indexOf('/') !== 0) {
+			var path = url.split('?');
+			url = path[0];
+
+			var relativePath = document.location.pathname.split('/');
+			relativePath.pop();
+			relativePath.push(url);
+			url = relativePath.join('/');
+
+			if (path[1] || false)
+			{
+				url += '?' + path[1];
+			}
 		}
 
 		return url;
@@ -117,20 +124,23 @@ var ajaxer = (function () {
 
 
 	this.get = function (url, successHandler, errorHandler) {
+		if (!url) return;
+
 		url = getRelativeUrl(url);
-		var currentUrl = getRelativeUrl(document.location.href.split('?').shift());
+
+		var currentUrl = getRelativeUrl(document.location.href);
 
 		if (url === currentUrl) return;
 
 		var success = function (url, xhr) {
 			replaceContentXHR(url, xhr);
 			hideOverlay();
-			successHandler(url, xhr);
+			if (successHandler) successHandler(url, xhr);
 		}.bind(this);
 
 		var error = function (url, xhr) {
 			hideOverlay();
-			errorHandler(url, xhr);
+			if (errorHandler) errorHandler(url, xhr);
 		}.bind(this);
 
 		if (dynamicCache.hasOwnProperty(url)) {
@@ -161,7 +171,7 @@ var ajaxer = (function () {
 			html: html.outerHTML
 		};
 
-		var url = getRelativeUrl(window.location.pathname);
+		var url = getRelativeUrl(window.location.pathname + window.location.search);
 
 		dynamicCache[url] = obj;
 
