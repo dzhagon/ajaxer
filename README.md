@@ -24,7 +24,7 @@ ajaxer.overlayShowClass = 'overlay--show';
 $(document).on('click', 'a', function () {
   var self = $(this);
   if (ajaxer || false) {
-   ajaxer.get(self.attr('href'), function () {}, function () { console.warn('fail to load', self.href); });
+   ajaxer.get(self.attr('href'), function () { console.log('loading success: ', self.href); }, function () { console.warn('fail to load', self.href); });
    window.scrollTo(0, 0);
    return false;
   }
